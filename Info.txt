@@ -1,0 +1,32 @@
+https://mvnrepository.com/artifact/mysql/mysql-connector-java
+sql connector
+
+
+BD nombre : bdjava
+
+tabla productos
+
+CREATE TABLE products (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    title VARCHAR(255) NOT NULL,
+    description TEXT,
+    price DOUBLE NOT NULL
+);
+
+
+
+informacion sacada de 
+
+stackoverflow , un libro y chati
+
+//GRACIAS STACKOVERFLOW
+
+https://stackoverflow.com/questions/65937673/how-to-connect-database-mysql-in-maven-webapp-servlet-project
+
+
+seguramente tenga que cambiar todo a spring y explote
+
+usar Spring para desarrollar aplicaciones web y manejar la persistencia de datos generalmente resulta en un código más limpio, menos propenso a errores, más fácil de mantener y escalar. Mientras que los servlets y JDBC son adecuados para proyectos más pequeños o para aprender los fundamentos, Spring es la opción preferida para aplicaciones más grandes y complejas.
+
+
+

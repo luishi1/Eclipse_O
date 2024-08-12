@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>Productos</title>
+<link href="style.css" rel="stylesheet" />
+
+<script>
+//Función asíncrona para obtener productos desde el servidor
+async function fetchProducts() {
+    // Realiza una solicitud GET al servlet de productos
+    const response = await fetch('/Luishiii/ProductServlet');
+    // Convierte la respuesta en un objeto JSON
+    const products = await response.json();
+    // Llama a la función para mostrar los productos en la página
+    displayProducts(products);
+}
+
+// Función para mostrar la lista de productos en la interfaz
+function displayProducts(products) {
+    // Obtiene el elemento donde se mostrarán los productos
+    const productList = document.getElementById('product-list');
+    productList.innerHTML = ''; // Limpia la lista existente
+
+    // Crea una tabla para mostrar los productos
+    const table = document.createElement('table');
+    // Crea la fila del encabezado de la tabla
+    const headerRow = `
+        <tr>
+            <th>Título</th>
+            <th>Descripción</th>
+            <th>Precio</th>
+        </tr>
+    `;
+    table.innerHTML = headerRow; // Establece el encabezado de la tabla
+
+    // Recorre cada producto y crea una fila en la tabla
+    products.forEach(product => {
+        const productRow = `
+            <tr>
+                <td>${product.title}</td>
+                <td>${product.description}</td>
+                <td>$${product.price}</td>
+            </tr>
+        `;
+        table.innerHTML += productRow; // Agrega la fila del producto a la tabla
+    });
+
+    // Agrega la tabla al contenedor de productos en la página
+    productList.appendChild(table);
+}
+
+// Función asíncrona para agregar un nuevo producto
+async function addProduct() {
+    // Obtiene los valores de los campos de entrada
+    const title = document.getElementById('title').value;
+    const description = document.getElementById('description').value;
+    const price = parseFloat(document.getElementById('price').value); // Convierte el precio a número
+
+    // Crea un objeto producto con los valores obtenidos
+    const product = { title, description, price };
+
+    // Realiza una solicitud POST para agregar el nuevo producto
+    const response = await fetch('/Luishiii/ProductServlet', {
+        method: 'POST', // Método de la solicitud
+        headers: {
+            'Content-Type': 'application/json' // Tipo de contenido JSON
+        },
+        body: JSON.stringify(product) // Convierte el objeto producto a JSON
+    });
+
+    // Convierte la respuesta en un objeto JSON
+    const result = await response.json();
+    console.log(result);
+    fetchProducts(); 
+    
+    document.getElementById('title').value = '';
+    document.getElementById('description').value = '';
+    document.getElementById('price').value = '';
+}
+
+// Función que se ejecuta cuando la ventana se carga
+window.onload = function() {
+    fetchProducts(); // Llama a la función para obtener y mostrar los productos
+};
+
+</script>
+
+</head>
+<body>
+	<h1>Lista de Productos</h1>
+	<div id="product-list"></div>
+
+	<h2>Agregar Producto</h2>
+	<form onsubmit="event.preventDefault(); addProduct();">
+	
+		<label for="title">Título:</label> 
+		<input type="text" id="title" required> <br> 
+		
+		<label for="description">Descripción:</label>
+		<input type="text" id="description" required> <br> 
+		
+		<label for="price">Precio:</label> 
+		<input type="number" id="price"step="0.01" required> <br>
+		
+		<button type="submit">Agregar Producto</button>
+	</form>
+</body>
+</html>
+
