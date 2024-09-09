@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Product List</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+    <div class="container mt-5">
+        <h1 class="mb-4">Product List</h1>
+        <a href="product-form.html" class="btn btn-primary mb-3">Add New Product</a>
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Name</th>
+                    <th>Price</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody id="product-list">
+                <!-- Products will be dynamically inserted here -->
+            </tbody>
+        </table>
+    </div>
+
+    <script>
+        // Example products data
+        const products = [
+            { id: 1, name: 'Product A', price: 10.00 },
+            { id: 2, name: 'Product B', price: 20.00 },
+            { id: 3, name: 'Product C', price: 30.00 }
+        ];
+
+        const productList = document.getElementById('product-list');
+
+        products.forEach(product => {
+            const row = document.createElement('tr');
+            row.innerHTML = `
+                <td>${product.id}</td>
+                <td>${product.name}</td>
+                <td>${product.price.toFixed(2)}</td>
+                <td>
+                    <a href="product-form.html?id=${product.id}" class="btn btn-warning btn-sm">Edit</a>
+                    <button class="btn btn-danger btn-sm" onclick="deleteProduct(${product.id})">Delete</button>
+                </td>
+            `;
+            productList.appendChild(row);
+        });
+
+        function deleteProduct(id) {
+            // Implement delete functionality here
+            alert(`Product with ID ${id} deleted!`);
+        }
+    </script>
+</body>
+</html>
