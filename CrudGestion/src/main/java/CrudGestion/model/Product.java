@@ -3,19 +3,35 @@ package CrudGestion.model;
 import jakarta.persistence.*;
 
 @Entity
+@Table(name = "products")
 public class Product {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private int id;
     private String name;
+    private String category;
     private double price;
-
+    
+    //constructor
+    public Product() {
+		
+	}
+	
+    
+    public Product(int id, String name, String category , double price) {
+		super();
+		this.id = id;
+		this.name = name;
+		this.category = category;
+		this.price = price;
+	}
+    
     // Getters and Setters
-    public Long getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(int id) {
         this.id = id;
     }
 
@@ -34,4 +50,12 @@ public class Product {
     public void setPrice(double price) {
         this.price = price;
     }
+
+	public String getCategory() {
+		return category;
+	}
+
+	public void setCategory(String category) {
+		this.category = category;
+	}
 }
